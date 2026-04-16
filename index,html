@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flash Cards - 14 Cartas</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      margin: 0;
+      padding: 20px;
+      min-height: 100vh;
+    }
+
+    h1 {
+      text-align: center;
+      color: white;
+      margin-bottom: 30px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      perspective: 1000px;
+      height: 200px;
+      cursor: pointer;
+    }
+
+    .card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      transition: transform 0.6s;
+      transform-style: preserve-3d;
+      border-radius: 15px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+    }
+
+    .card.flipped .card-inner {
+      transform: rotateY(180deg);
+    }
+
+    .card-front, .card-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
+    .card-front {
+      background: white;
+      color: #333;
+      font-size: 1.4rem;
+      font-weight: bold;
+    }
+
+    .card-back {
+      background: #2c3e50;
+      color: white;
+      transform: rotateY(180deg);
+      font-size: 1.2rem;
+    }
+
+    .card-number {
+      position: absolute;
+      top: 12px;
+      left: 15px;
+      background: rgba(0,0,0,0.2);
+      color: white;
+      font-size: 0.9rem;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    button {
+      display: block;
+      margin: 30px auto;
+      padding: 12px 30px;
+      font-size: 1.1rem;
+      background: white;
+      color: #667eea;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    button:hover {
+      background: #f0f0f0;
+    }
+  </style>
+</head>
+<body>
+  <h1>Flash Cards - 14 Cartas</h1>
+
+  <div class="container" id="cards-container">
+    <!-- As 14 cartas serão geradas pelo JavaScript -->
+  </div>
+
+  <button onclick="reiniciarCartas()">Reiniciar Todas as Cartas</button>
+
+  <script>
+    // === DADOS DAS 14 CARTAS ===
+    // Você pode editar as perguntas e respostas aqui facilmente
+    const flashcards = [
+      { frente: "Qual é a capital da França?", verso: "Paris" },
+      { frente: "Qual é o maior planeta do Sistema Solar?", verso: "Júpiter" },
+      { frente: "Quem pintou a Mona Lisa?", verso: "Leonardo da Vinci" },
+      { frente: "Qual é a fórmula da água?", verso: "H₂O" },
+      { frente: "Em que ano o Brasil foi descoberto?", verso: "1500" },
+      { frente: "Qual é o maior oceano do mundo?", verso: "Oceano Pacífico" },
+      { frente: "Quantos continentes existem?", verso: "7" },
+      { frente: "Qual é a linguagem de programação mais usada em 2026?", verso: "Python" },
+      { frente: "Qual é o símbolo químico do ouro?", verso: "Au" },
+      { frente: "Quem escreveu 'Dom Casmurro'?", verso: "Machado de Assis" },
+      { frente: "Qual é o planeta mais próximo do Sol?", verso: "Mercúrio" },
+      { frente: "Quantos lados tem um hexágono?", verso: "6" },
+      { frente: "Qual é a capital do Japão?", verso: "Tóquio" },
+      { frente: "O que significa HTML?", verso: "HyperText Markup Language" }
+    ];
+
+    const container = document.getElementById('cards-container');
+
+    // Criar as 14 cartas
+    function criarCartas() {
+      container.innerHTML = '';
+
+      flashcards.forEach((carta, index) => {
+        const cardHTML = `
+          <div class="card" onclick="this.classList.toggle('flipped')">
+            <div class="card-inner">
+              <div class="card-front">
+                <div class="card-number">${index + 1}</div>
+                ${carta.frente}
+              </div>
+              <div class="card-back">
+                <div class="card-number">${index + 1}</div>
+                ${carta.verso}
+              </div>
+            </div>
+          </div>
+        `;
+        container.innerHTML += cardHTML;
+      });
+    }
+
+    // Reiniciar todas as cartas (virar para frente)
+    function reiniciarCartas() {
+      document.querySelectorAll('.card').forEach(card => {
+        card.classList.remove('flipped');
+      });
+    }
+
+    // Inicializar
+    window.onload = criarCartas;
+  </script>
+</body>
+</html>
